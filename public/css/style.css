@@ -1,0 +1,11 @@
+#list {
+  list-style-type: none;
+}
+
+#list {
+  position: relative;
+  /* display: grid;
+  grid-template-columns: repeat(80, 10px);
+  grid-template-rows: repeat(300, 10px); */
+  /* grid-template-rows: masonry; */
+}

@@ -1,0 +1,15 @@
+{
+  "name": "pinterest-like",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc",
+    "test": "test"
+  },
+  "author": "valerio francescangeli",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}
