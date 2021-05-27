@@ -41,7 +41,6 @@ function organiseByColumnWidth(container: HTMLElement) {
       elementIndex += 1
     });
     
-    
     rowIndex += colummsPerRow;
   }
 }
@@ -53,14 +52,10 @@ function getPreviousTop(el: HTMLElement): number {
 
 function appendRandomList(container: HTMLElement) {
   const intialList = createInitialList(60);
-  // console.log(intialList);
-
   const items = formatListIntoColumns(intialList, 4);
-  // console.log(items);
 
   items.forEach((row, rowIndex) => {
     const fragment = new DocumentFragment()
-    // const elements = [];
     row.forEach((item, columnIndex) => {
       const li = document.createElement("li");
       li.dataset["position"] = `${rowIndex},${columnIndex}`;
@@ -68,13 +63,6 @@ function appendRandomList(container: HTMLElement) {
       li.style.outline = `solid 1px ${item.color}`;
       li.style.width = `${item.width}px`;
       li.style.height = `${item.height}px`;
-
-      // const columnMax = (columnIndex + 1) * rowWidth;
-      // const columnMin = columnMax - rowWidth + 1;
-      // li.style.gridColumn = `${columnMin} / ${columnMax}`
-      
-      // li.style.height = `${item.height}px`;
-      // li.style.gridRow = `${} / ${}`;
 
       fragment.appendChild(li);
     });
