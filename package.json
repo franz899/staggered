@@ -1,7 +1,7 @@
 {
-  "name": "pinterest-like",
-  "version": "1.0.0",
-  "description": "",
+  "name": "staggered",
+  "version": "0.0.1",
+  "description": "A Pinterest like demo",
   "main": "index.js",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --outdir=public/js",
@@ -10,7 +10,7 @@
     "test": "test",
     "server": "reload -d public"
   },
-  "author": "valerio francescangeli",
+  "author": "valerio francescangeli <franz899@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "esbuild": "^0.12.5",
