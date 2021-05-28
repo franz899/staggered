@@ -1,3 +1,5 @@
+import { appendRandomList } from "./create-elements";
+
 const list = document.getElementById("list") as HTMLUListElement;
 
 main();
@@ -15,22 +17,17 @@ function organiseByColumnWidth(container: HTMLElement) {
   const width = container.clientWidth;
   const colummsPerRow = Math.floor(width / columnWidth);
 
-  if (colummsPerRow === 0) {
-    // leave it as it is;
-    return;
-  }
-
   let elementIndex = 0;
   let rowIndex = 0;
   while (rowIndex < elements.length) {
     const columnIndex = rowIndex / colummsPerRow;
-    const subset = elements.slice(rowIndex, rowIndex+colummsPerRow);
+    const subset = elements.slice(rowIndex, rowIndex + colummsPerRow);
 
     subset.forEach((el, index) => {
       el.style.width = `${columnWidth}px`;
       el.style.position = "absolute";
-      el.style.left = `${index + index*columnWidth + (gap * index)}px`;
-      
+      el.style.left = `${index * columnWidth + gap * index}px`;
+
       if (columnIndex > 0) {
         const previousElement = elements[elementIndex - colummsPerRow];
         const top = getPreviousTop(previousElement);
@@ -38,87 +35,49 @@ function organiseByColumnWidth(container: HTMLElement) {
         el.style.top = `${top + height + gap}px`;
       }
 
-      elementIndex += 1
+      elementIndex += 1;
     });
-    
+
     rowIndex += colummsPerRow;
   }
+
+  const maxHeight = getMaxHeight(
+    elements.slice(elements.length - colummsPerRow, -1)
+  );
+
+  container.style.height = `${maxHeight}px`;
 }
 
-function getPreviousTop(el: HTMLElement): number {
-  const match = el.style.top.match(/\d+/);
-  return match ? Number(match[0]) : 0;
-}
-
-function appendRandomList(container: HTMLElement) {
-  const intialList = createInitialList(60);
-  const items = formatListIntoColumns(intialList, 4);
-
-  items.forEach((row, rowIndex) => {
-    const fragment = new DocumentFragment()
-    row.forEach((item, columnIndex) => {
-      const li = document.createElement("li");
-      li.dataset["position"] = `${rowIndex},${columnIndex}`;
-      // li.style.backgroundColor = item.color;
-      li.style.outline = `solid 1px ${item.color}`;
-      li.style.width = `${item.width}px`;
-      li.style.height = `${item.height}px`;
-
-      fragment.appendChild(li);
-    });
-    container.appendChild(fragment);
+function removeStaggeredStyles(elements: HTMLElement[]) {
+  elements.forEach((el) => {
+    el.style.removeProperty("position");
+    el.style.removeProperty("width");
+    el.style.removeProperty("top");
+    el.style.removeProperty("left");
+    el.style.removeProperty("right");
   });
 }
 
-interface ItemInfo {
-  width: number,
-  height: number,
-  color: string,
+function getPreviousTop(el: HTMLElement): number {
+  return parseNumber(el.style.top);
 }
 
-function createInitialList(size: number): ItemInfo[] {
-  const list = [];
-  for (let i = 0; i < size; i++) {
-    const size = {
-      width: getRandomIntInclusive(320, 500),
-      height: getRandomIntInclusive(400, 700),
-      color:  randomColor(),
-    };
-    list.push(size);
-  }
-  return list;
-}
-
-function getRandomIntInclusive(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
-}
-
-function randomColor() {
-  let color = '#';
-  for (let i = 0; i < 6; i++){
-     const random = Math.random();
-     const bit = (random * 16) | 0;
-     color += (bit).toString(16);
-  };
-  return color;
-}
-
-function formatListIntoColumns(items: ItemInfo[], columns: number) {  
-  const result: ItemInfo[][] = [];
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const insertIndex = Math.trunc(i / columns);
-
-    if (result.length === insertIndex) {
-      result.push([]);
-    }
-
-    result[insertIndex].push(item);
+function parseNumber(x: number | string, defaultValue = 0) {
+  if (typeof x === "number") {
+    return x;
   }
 
-  return result;
+  const match = x.match(/\d+/);
+  return match ? Number(match[0]) : defaultValue;
 }
 
+function getMaxHeight(elements: HTMLElement[]) {
+  let max = 0;
 
+  elements.forEach((el) => {
+    const h = parseNumber(el.style.top) + parseNumber(el.style.height);
+    max = Math.max(max, h);
+  });
+
+  return max;
+}

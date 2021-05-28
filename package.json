@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc",
+    "build": "esbuild src/index.ts --bundle --outdir=public/js",
+    "typecheck": "tsc -noEmit",
+    "dev": "npm run typecheck & npm run build -- --watch",
     "test": "test"
   },
   "author": "valerio francescangeli",
   "license": "ISC",
   "devDependencies": {
+    "esbuild": "^0.12.5",
     "typescript": "^4.3.2"
   }
 }

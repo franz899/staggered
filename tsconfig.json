@@ -4,9 +4,12 @@
     "strict": true,
     "sourceMap": true,
     "watch": true,
-    "outDir": "./public/js"
   },
-  "files": [
-    "src/index.ts"
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    "public/**/*"
   ]
 }
