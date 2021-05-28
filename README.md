@@ -1,9 +1,10 @@
-# Pintererst like
+# Staggered
+
+A Pintererst like demo
 
 ## How to run
 ```
-npm run dev
+npm i
 
-cd public
-reload
+npm run dev
 ```

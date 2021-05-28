@@ -41,10 +41,8 @@ function organiseByColumnWidth(container: HTMLElement) {
     rowIndex += colummsPerRow;
   }
 
-  const maxHeight = getMaxHeight(
-    elements.slice(elements.length - colummsPerRow, -1)
-  );
-
+  const lastFourElements = elements.slice(elements.length - colummsPerRow, -1);
+  const maxHeight = getMaxHeightOf(lastFourElements);
   container.style.height = `${maxHeight}px`;
 }
 
@@ -71,7 +69,7 @@ function parseNumber(x: number | string, defaultValue = 0) {
   return match ? Number(match[0]) : defaultValue;
 }
 
-function getMaxHeight(elements: HTMLElement[]) {
+function getMaxHeightOf(elements: HTMLElement[]) {
   let max = 0;
 
   elements.forEach((el) => {

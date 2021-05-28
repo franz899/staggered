@@ -6,13 +6,15 @@
   "scripts": {
     "build": "esbuild src/index.ts --bundle --outdir=public/js",
     "typecheck": "tsc -noEmit",
-    "dev": "npm run typecheck & npm run build -- --watch",
-    "test": "test"
+    "dev": "npm run typecheck & npm run build -- --watch & npm run server",
+    "test": "test",
+    "server": "reload -d public"
   },
   "author": "valerio francescangeli",
   "license": "ISC",
   "devDependencies": {
     "esbuild": "^0.12.5",
+    "reload": "^3.1.1",
     "typescript": "^4.3.2"
   }
 }
